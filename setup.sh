@@ -12,7 +12,7 @@ echo "Setting up MC on port $SERVER_PORT and geyser on $GEYSER_PORT"
 
 
 
-git pull https://github.com/kaboomserver/server.git server
+git clone https://github.com/kaboomserver/server.git server
 
 sed -i "s/25565/$SERVER_PORT/" server/server.properties
 sed -i "s/19132/$GEYSER_PORT/" server/plugins/Geyser-Spigot/config.yml
