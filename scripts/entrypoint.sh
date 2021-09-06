@@ -1,12 +1,13 @@
 #!/bin/bash
 
-while true; do
-    java -Xms$MEMORY -Xmx$MEMORY $JAVA_ARGS -jar server.jar -nogui
-    rm -rf worlds
+rm -rf worlds
 
-    if [ $AUTO_UPDATE = "1" ]; then
-        git pull
-    fi
+if [ ! -f "/server/server.jar" ]; then
+    git clone https://github.com/kaboomserver/server.git /server
+elif [ $AUTO_UPDATE = "1" ]; then
+    git pull
+fi
 
-    sleep 5
-done
+/scripts/alivecheck.sh &
+
+exec java -Xms$MEMORY -Xmx$MEMORY $JAVA_ARGS -jar server.jar -nogui

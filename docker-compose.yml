@@ -6,15 +6,16 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
-
+      network: host
+    
     volumes:
       - ./server:/server
     
-    ports:
-      - 19132:19132/udp
-      - 25565:25565/tcp
+    network_mode: host
     
     environment:
       AUTO_UPDATE: 1
-      MEMORY: 1G
+      MEMORY: 2G
       JAVA_ARGS: "-XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:+AlwaysPreTouch -XX:G1NewSizePercent=40 -XX:G1MaxNewSizePercent=50 -XX:G1HeapRegionSize=16M -XX:G1ReservePercent=15 -XX:G1HeapWastePercent=5 -XX:G1MixedGCCountTarget=4 -XX:InitiatingHeapOccupancyPercent=20 -XX:G1MixedGCLiveThresholdPercent=90 -XX:G1RSetUpdatingPauseTimePercent=5 -XX:SurvivorRatio=32 -XX:+PerfDisableSharedMem -XX:MaxTenuringThreshold=1 -Dusing.aikars.flags=https://mcflags.emc.gs -Daikars.new.flags=true"
+    
+    restart: "unless-stopped"
